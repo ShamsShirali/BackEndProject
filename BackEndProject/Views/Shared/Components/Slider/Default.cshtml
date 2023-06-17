@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Slider>
+
+@{
+    int count = 0;
+}
+
+<section class="hero-area hero-slider-1">
+    <div class="sb-slick-slider" data-slick-setting='{
+                            "autoplay": true,
+                            "fade": true,
+                            "autoplaySpeed": 3000,
+                            "speed": 3000,
+                            "slidesToShow": 1,
+                            "dots":true
+                            }'>
+
+        @foreach (Slider slider in Model)
+        {
+            count++;
+
+            <div class="single-slide">
+                <div class="container">
+                    <div class="home-content text-center text-sm-left position-relative">
+                        <div class="hero-partial-image @((count %2!=0) ? "image-right" : "image-left")">
+                            <img src="~/image/bg-images/@slider.Image" alt="">
+                        </div>
+                        <div class="row @((count %2!=0) ? "no-gutters" : "align-items-center justify-content-start justify-content-md-end")">
+                            <div class="@((count %2!=0) ? "col-xl-6" : "col-lg-6 col-xl-7") col-md-6 col-sm-7">
+                                <div class="home-content-inner @((count %2!=0) ? "content-left-side" : "content-right-side")">
+                                    <h1>@Html.Raw(slider.Title)</h1>
+                                    <h2>@slider.Description</h2>
+                                    <a href="@slider.Link" class="btn btn-outlined--primary">
+                                        $78.09 - Order Now!
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

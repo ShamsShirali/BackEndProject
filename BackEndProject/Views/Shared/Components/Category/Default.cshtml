@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Category>
+
+<div class="col-lg-3">
+    <nav class="category-nav   ">
+        <div class="categoriesList">
+            <a href="javascript:void(0)" class="category-trigger">
+                <i class="fa fa-bars"></i>Browse
+                categories
+            </a>
+            <ul class="category-menu">
+                @foreach (Category category in Model)
+                {
+                    <li id="0" class="cat-item @category.Child @category.Hidden @category.Mega"><a href="#" class="@(category.Name=="More Categories" ? "js-expand-hidden-menu" : " ")">@category.Name</a></li>
+
+                    @if (category.Children != null && category.Children.Count() > 0)
+                    {
+                        foreach (Category child in category.Children)
+                        {
+                            <ul class="sub-menu">
+                                <li><a href="#">@child.Name</a></li>
+                            </ul>
+                        }
+                    }
+                }
+            </ul>
+        </div>
+    </nav>
+</div>
