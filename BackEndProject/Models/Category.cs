@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEndProject.Models
 {
@@ -18,5 +19,8 @@ namespace BackEndProject.Models
         public Category? Parent { get; set; }
         public IEnumerable<Category>? Children { get; set; }
         public IEnumerable<Product>? Products { get; set; }
+
+        [NotMapped]
+        public IFormFile? File { get; set; }
     }
 }

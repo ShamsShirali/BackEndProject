@@ -35,15 +35,13 @@
                     no++;
                     <tr>
                         <th scope="row">@no</th>
-                        <td scope="row">
-                            <img style="width:100px" src="~/assets/images/@category.Image">
-                        </td>
                         <td>@category.Name</td>
                         <td>@category.Products?.Count()</td>
                             <td>@category.Children?.Count()</td>
                         <td scope="row">
                             <a class="btn btn-warning" asp-area="Manage" asp-controller="category" asp-action="Update" asp-route-id="@category.Id">Update</a>
                             <a class="btn btn-danger" asp-area="Manage" asp-controller="category" asp-action="Delete" asp-route-id="@category.Id">Delete</a>
+                            <a class="btn btn-primary" asp-area="Manage" asp-controller="category" asp-action="Detail" asp-route-id="@category.Id">Detail</a>
                         </td>
                     </tr>
                 }
