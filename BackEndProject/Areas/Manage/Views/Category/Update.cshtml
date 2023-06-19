@@ -4,7 +4,7 @@
     ViewData["Title"] = "Update";
 
     List<Category> mainCategories = ViewBag.MainCategories;
-    SelectList selectListItems = new SelectList(mainCategories, nameof(Category.Id), nameof(Category.Name));
+    SelectList selectListItems = new SelectList(mainCategories, nameof(Category.Id), nameof(Category.Name),Model.ParentId);
 }
 
 <!-- Page Heading -->
@@ -15,7 +15,7 @@
     <div class="m-auto col-lg-8">
         <form method="post" enctype="multipart/form-data">
             <div class="form-check">
-                <input asp-for="IsMain" class="form-check-input">
+                <input disabled asp-for="IsMain" class="form-check-input">
                 <label asp-for="IsMain" class="form-check-label">Is Main</label>
             </div>
             <div class="form-group">
@@ -43,3 +43,7 @@
         </form>
     </div>
 </div>
+
+                @section Scripts{
+@await Html.PartialAsync("_Validation")
+                }

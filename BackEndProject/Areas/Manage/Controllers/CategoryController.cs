@@ -100,7 +100,7 @@ namespace BackEndProject.Areas.Manage.Controllers
                     return View();
                 }
 
-                if(!await _context.Categories.AnyAsync(c=>c.IsDeleted && c.IsMain && c.Id==category.ParentId))
+                if(!await _context.Categories.AnyAsync(c=>c.IsDeleted==false && c.IsMain && c.Id==category.ParentId))
                 {
                     ModelState.AddModelError("ParentId", "Parent Id Is InCorrect");
                     return View();
@@ -151,6 +151,12 @@ namespace BackEndProject.Areas.Manage.Controllers
                 return View(category);
             }
 
+            if(await _context.Categories.AnyAsync(c=>c.IsDeleted==false && c.Name.ToLower() == category.Name.Trim().ToLower() && c.Id!=category.Id))
+            {
+                ModelState.AddModelError("Name", "Same Name Already Exists");
+                return View(category);
+            }
+
             if (category.IsMain)
             {
                 if(category.File!= null)
@@ -167,8 +173,27 @@ namespace BackEndProject.Areas.Manage.Controllers
             }
             else
             {
+                if (category.ParentId == null)
+                {
+                    ModelState.AddModelError("ParentId", "Parent Id Is Required");
+                    return View();
+                }
 
+                if (!await _context.Categories.AnyAsync(c => c.IsDeleted==false && c.IsMain && c.Id == category.ParentId))
+                {
+                    ModelState.AddModelError("ParentId", "Parent Id Is InCorrect");
+                    return View();
+                }
+
+                dbCategory.ParentId = category.ParentId;
             }
+
+            dbCategory.Name=category.Name.Trim();
+            dbCategory.UpdateBy = "System";
+            dbCategory.UpdateAt= DateTime.UtcNow.AddHours(4);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
